@@ -56,15 +56,21 @@ As mentioned above if after running ```rake spec``` you need to install some fur
 1. Add the following commands to your shell script
 
 ```# nodejs install```
+
 ```sudo apt-get install nodejs -y```
+
 ```sudo apt-get install python-software-properties -y```
+
 ```curl curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -sudo apt-get install nodejs -y```
 
 ```# pm2 install```
+
 ```sudo npm install pm2 -g```
 
 ```cd app```
+
 ```npm install```
+
 ```node app.js```
 
 2. It should look like this

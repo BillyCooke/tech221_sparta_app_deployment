@@ -51,3 +51,24 @@ As mentioned above if after running ```rake spec``` you need to install some fur
 12. Then you just need to run the code ```node app.js```
 13. Copy the IP address in your vagrant file and paste it into a url but add the port ```:3000``` at the end of it
 14. If everything works the app screen should load up
+
+## To automate installing the applications use the following
+1. Add the following commands to your shell script
+
+```# nodejs install```
+```sudo apt-get install nodejs -y```
+```sudo apt-get install python-software-properties -y```
+```curl curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -sudo apt-get install nodejs -y```
+
+```# pm2 install```
+```sudo npm install pm2 -g```
+
+```cd app```
+```npm install```
+```node app.js```
+
+2. It should look like this
+
+![Alt text](Shell%20script.png)
+
+3. Now all you have to do is run the command ```vagrant up``` in VS and enter ```192.168.10.100:3000``` into a browser and the sparta app will run

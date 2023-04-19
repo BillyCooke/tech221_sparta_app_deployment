@@ -1,7 +1,7 @@
 # MongoDB
 
 ## What is MongoDB?
-MongoDB is a document database with the scalability and flexivility that you want with the querying and indexing you need. It is a NoSQl database programme.
+MongoDB is a document database with the scalability and flexibility that you want with the querying and indexing you need. It is a NoSQl database programme. It is open-source.
 
 ## What are NoSQL databases?
 A NoSQL database is a non-tabular database used for storage and retrieval of data. Whereas SQL databses use a colelction of tables to store data.
@@ -11,6 +11,7 @@ A NoSQL database is a non-tabular database used for storage and retrieval of dat
 * Fine-grained locking
 * Vibrant community of users
 * Mature ecosystem of tools
+* Powerful query language
 
 ## History of MongoDB
 Mongo DB used to just be a data store for JSON which it was very efficient at but it then introduced sharding and being able to horizontally calle using commodity hardware is why it became so popular. Over the years it grew and gained more framewroks such as the aggregatrion framework which again drew more popularity.

@@ -78,3 +78,58 @@ As mentioned above if after running ```rake spec``` you need to install some fur
 ![Alt text](Shell%20script.png)
 
 3. Now all you have to do is run the command ```vagrant up``` in VS and enter ```192.168.10.100:3000``` into a browser and the sparta app will run
+
+## How to run two VM's in the same Vagrant file
+
+1. We need to name our original VM so that it does not get confused.
+2. This is our original code which we have now changed
+![Alt text](VM%20app.png)
+3. In the above we have change our original code from default to app
+4. We need to ensure there is an indent under ```config.vm.defibe "app" do |app|```
+5. Next we can add a new VM called ```db```
+6. We need to add the below code
+
+![Alt text](db%20vm.png)
+
+7. The only changes from the ```app``` code is that this one is named ```db``` and we need to change the IP address. We have kept it in the same range but changed it slightly
+
+
+## How to add MongoDB to our VM via provisioning
+We want to add this to our db VM that we just made so we need to follow the below
+1. In VS code we want to make a new shell script in a seperate location and I chose the environment folder.
+2. In the folder add a new file called provision.sh
+3. Add the below codes
+
+```#!/bin/bash```
+
+```sudo apt update```
+
+```sudo apt upgrade```
+
+```sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927```
+
+```echo "deb https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list```
+
+```sudo apt update```
+
+```sudo apt upgrade```
+
+```sudo apt-get install -y mongodb-org=3.2.20 mongodb-org-server=3.2.20 mongodb-org-shell=3.2.20 mongodb-org-mongos=3.2.20 mongodb-org-tools=3.2.20```
+
+```sudo systemctl start mongod```
+
+4. Then back in your vagrant file you need to add the following command
+
+```db.vm.provision "shell", path: "C:/Users/billy/Sparta/tech221_virtualisation/environment/spec-tests/provision.sh"```
+
+5. It should now look like this
+
+![Alt text](MongoDB%20vm%20code.png)
+
+6. The command above is first telling vagrant that we want to pull from a shell script but then we need to provide it with the path. In my example I right clicked on the shell file in environment and copied the path.
+7. Then in the VS terminal run ```vagrant up db``` as we only want to run db and not app as well
+8. After this has all loaded go into your Git Bash and run ```vagrant ssh db``` again we are stating which VM to ssh into
+9. Then use the command ```sudo systemctl status mongod``` to check it mongod has installed
+10. If you see the same message as below then it has installed properly
+
+![Alt text](MongoDB%20status.png)

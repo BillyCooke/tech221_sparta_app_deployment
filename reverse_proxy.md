@@ -37,5 +37,6 @@ To set up an Nginx reverse proxy you must do the following
 1. You must first have Nginx installed, you can do this using ```sudo apt install nginx -y```
 2. I already had it installed so I used ```sudo systemctl status nginx``` to check
 3. Next we need to disable the virtual host using ```sudo unlink /etc/nginx/sites-enabled/default```
-4. 
+4. Then we need to access the below directory
+
 

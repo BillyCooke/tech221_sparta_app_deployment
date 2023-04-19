@@ -133,3 +133,11 @@ We want to add this to our db VM that we just made so we need to follow the belo
 10. If you see the same message as below then it has installed properly
 
 ![Alt text](MongoDB%20status.png)
+
+## Running a process as a background process
+When we run our vm app we get locked out of the terminal so below is a way to stop that and turn thr process into a background process.
+1. Go into your shell file provision.sh
+2. Change the last few commands by adding ```&``` at the end
+3. This should look like the below
+
+![Alt text](Background%20process.png)

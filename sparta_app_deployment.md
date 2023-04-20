@@ -141,3 +141,60 @@ When we run our vm app we get locked out of the terminal so below is a way to st
 3. This should look like the below
 
 ![Alt text](Background%20process.png)
+
+## Connecting our database to our app
+1. First we want to change our vagrant file slightly
+2. We want to change ```app.vm.box``` and ```db.vm.box``` to ```app.vm.box = "ubuntu/bionic64"``` and ```db.vm.box = "ubuntu/bionic64"```
+3. They both previosuly had ```xenial64``` but we have changed it to ```bionic64```
+4. Next we need to ```vagrant up``` in VS to launch both VM's
+5. When they are both up and running we need to open two Git Bash terminals
+6. Then use ```vagrant ssh app``` in one and ```vagrant ssh db``` in the other
+7. In the app terminal we just want to make sure we have ```nodejs``` and ```pm2``` installed properlly
+8. We use ```nodejs --version``` then enter and then ```pm2 --version``` to check both of these
+9. In the db terminal we need to check mongod is running so we use ```sudo systemctl status mongod```
+10. Next we need to change the configuration of mongodb by using ```sudo nano /etc/mongod.conf```
+11. This will bring up the file and we need to go right to the bottom
+12. In network interfaces we need to change the ```bindIP``` to ```0.0.0.0```
+13. Use ctrl x, press y and then enter to save and exit
+14. To implement the changes we need to use ```sudo systemctl restart mongod```
+15. Then to start the mongod use ```sudo systemctl enable mongod```
+16. After this use ```sudo systemctl status mongod``` just to check everything is working
+17. Use control z to exit that
+18. Now we need to go into the app terminal
+19. We use ```sudo nano .bashrc``` which will bring up a file and  we need to go to the bottom underneath eveything else
+20. We then write ```export DB_HOST=mongodb://192.168.10.150:27017/posts```
+21. A break down of the above code is we use export to define the variable, DB_HOST was already given to use to use by the Dev team, the IP address is the same we already entered in our vagrant file, 27017 is the default MongoDB port and posts is the page that the Dev team passed us
+22. Use ctrl x, press y and then enter to save and exit
+23. We now need to refresh the file using ```source .bashrc```
+24. We can use ```printenv DB_HOST``` to show us the variable we created
+25. Now we need to go into the location of our app using ```cd app```
+26. Then install npm using ```npm install```
+27. After it has installed use ```node seeds/seed.js``` to run the file to seed the database
+28. Then start the app using ```node app.js```
+29. Now we go into a browser and enter ```192.168.10.100:3000/posts``` which should bring up the Sparta posts page
+
+## How to provision changing the Mongod.conf
+1. Go into your shell script for your db file
+2. We first need to make a new conf file with the changed input. I made a new file in VS called mongod.conf and plavced it in the same directory as my vagrant file
+3. I then copied over everything that was in the original file but changed the ```bindIP``` to ```0.0.0.0```
+4. We then need to remove the conf file and replace it with the changed version
+5. We remove the file by doing ```sudo rm /etc/mongod.conf```
+6. Then replace it using sudo ```ln -s /vagrant/environment/mongod.conf /etc```
+7. Next we need to restart mongodb and enable it. We use ```sudo systemctl restart mongod``` and ```sudo systemctl enable mongod``` to do this.
+8. Your code should look like this
+
+![Alt text](MongoDB%20provision.png)
+
+9. Then use ```vagrant up``` in VS
+10. Once it has loaded us Git Bash and run ```vagrant ssh app```
+11. We use ```sudo nano .bashrc``` which will bring up a file and we need to go to the bottom underneath eveything else
+12. We then write ```export DB_HOST=mongodb://192.168.10.150:27017/posts```
+13. A break down of the above code is we use export to define the variable, DB_HOST was already given to use to use by the Dev team, the IP address is the same we already entered in our vagrant file, 27017 is the default MongoDB port and posts is the page that the Dev team passed us
+14. Use ctrl x, press y and then enter to save and exit
+15. We now need to refresh the file using ```source .bashrc```
+16. We can use ```printenv DB_HOST``` to show us the variable we created
+17. Now we need to go into the location of our app using ```cd app```
+18. Then install npm using ```npm install```
+19. After it has installed use ```node seeds/seed.js``` to run the file to seed the database
+20. Then start the app using ```node app.js```
+21. Now we go into a browser and enter ```192.168.10.100:3000/posts``` which should bring up the Sparta posts page

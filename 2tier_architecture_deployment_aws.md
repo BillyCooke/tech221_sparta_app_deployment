@@ -49,4 +49,18 @@
 19. To implement this change we need to restart MongoDB using ```sudo systemctl restart mongod```
 20. Then restart is using ```sudo systemctl enable mongod```
 21. We can check to see if it is working using ```sudo systemctl status mongod```
-22. 
+
+## Connecting app and db
+
+1. Open your app terminal or if you don't have one you need to ssh into it on Git Bash
+2. Once you are in use ```sudo nano .bashrc``` to open up the folder
+3. Scroll to the bottom and add this environment variable ```export DB_HOST=mongodb://'pubic IP':27017/posts```
+4. You must replace 'public IP' with the IP from your db instance
+5. Use ctrl x, press y and enter to save and exit
+6. Use ```source .bashrc``` to implement the changes
+7. Then go into your app folder using ```cd app```
+8. Seed the database using ```node seeds/seed.js```
+9. Then run the app with ```node app.js```
+10. Use your IP address from your app instance and enter it into a browser but add ```:3000/posts``` onto the end
+11. If you have a reverse proxy set up then you do not need to add ```:3000``` but you still need ```/posts```
+12. You should then see the Sparta page with the recent posts information

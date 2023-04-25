@@ -198,3 +198,17 @@ When we run our vm app we get locked out of the terminal so below is a way to st
 19. After it has installed use ```node seeds/seed.js``` to run the file to seed the database
 20. Then start the app using ```node app.js```
 21. Now we go into a browser and enter ```192.168.10.100:3000/posts``` which should bring up the Sparta posts page
+
+## Adding the Sparta app through AWS
+1. First we need to launch an instance via the normal way and then ssh into it in Git Bash
+2. Then we need to open a second Git Bash terminal and cd into the .ssh file
+3. We then need to run this code ```scp -i "tech221.pem" -r C:/Users/billy/Sparta/tech221_virtualisation/app ubunu@ec2-52-213-217-214.eu-west-1.compute.amazonaws.com:/home/ubuntu/```
+4. The first part ```scp -i "tech221.pem" -r``` is always the same which is followed by the path of where the app folder is located ```C:/Users/billy/Sparta/tech221_virtualisation/app```
+5. Then the next part is copied from the connect page on AWS ```ubunu@ec2-52-213-217-214.eu-west-1.compute.amazonaws.com```
+6. Then at the end we need to state where to copy the file over to ```:/home/ubuntu/```
+7. The code will then run and copy everything from the app folder over which will take a few minutes
+8. Then use the following commands to get the app running
+9. Use ```curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -``` first
+10. Then ```sudo apt-get install nodejs -y```
+11. Next use ```sudo npm install pm2 -g```
+12. Then ```node app.js```

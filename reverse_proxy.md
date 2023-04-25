@@ -37,6 +37,30 @@ To set up an Nginx reverse proxy you must do the following
 1. You must first have Nginx installed, you can do this using ```sudo apt install nginx -y```
 2. I already had it installed so I used ```sudo systemctl status nginx``` to check
 3. Next we need to disable the virtual host using ```sudo unlink /etc/nginx/sites-enabled/default```
-4. Then we need to access the below directory
+4. Then we need to access this directory ```cd /etc/nginx/sites-available```
+5. Then we need to create a file by doing ```sudo nano nodeapp.conf```
+6. We need to enter in the below
+server {
+   listen 80;
+   server_name <server name>;
+
+   location / {
+       proxy_pass http://<server name>:3000;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto $scheme;
+   }
+}
+7. Then use this ```sudo ln -s /etc/nginx/sites-available/nodeapp.conf /etc/nginx/sites-enabled/nodeapp.conf``` to create the link
+8. Then use ```sudo nginx -t``` to test the connection
+9. Next use ```sudo systemctl reload nginx```
+10. Use ```cd``` and then ```cd app``` to go into the app folder
+11. Then use ```node app.js``` to run the app
+12. Copy your punblic IP address from your instance on AWS and paste it into a browser
+13. This will now load up the Sparta App page
+14. Previosuly you would have needed to add ```:3000``` at the end of the IP to do this but now you only need the IP with the reverse proxy
+
+
 
 

@@ -71,4 +71,4 @@ In the diagram above:
 26. In tags we want to enter name in keys and then the name of the tag in value
 27. Select next, review everything and then create auto scaling group
 28. Now go to your instances and you should see that you have two running or 3 if your CPU utilization has triggered a third one to be made
-29. You can sue the public IP addressed of each instance to check they are working by pasting them into separate browsers
+29. You can use the public IP address of each instance to check they are working by pasting them into separate browsers

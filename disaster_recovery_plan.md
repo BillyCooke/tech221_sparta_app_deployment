@@ -57,4 +57,102 @@ Software development kit is the collection of various software development tools
 ## How to create an S3 bucket and use CRUD (Create, Read, Update and Delete)
 1. In your instance on Git Bash use aws ```s3 mb s3://billy-tech221``` to make a bucket called billy-tech221
 2. Make a file to test the upload ```sudo nano test.txt``` and write anything inside but comment it out
-3. Copy the file over to the bucket using aws s3 cp test.txt s3://billy-tech221
+3. Copy the file over to the bucket using ```aws s3 cp test.txt s3://billy-tech221```
+4. In the command above aws states the cloud service, s3 states the service, cp is the commoand to copy, test.txt is the test file we made and s3://billy-tech221 is the location where we want to uplaod to
+5. To download a file we use ```aws s3 cp s3://billy-tech221/test.txt /home/ubuntu```
+6. To delete the file use ```aws s3 rm s3://billy-tech221/test.txt```
+7. To delete the bucket use ```aws s3 rb s3://billy-tech221```
+
+## S3 storage classes
+You can choose different types of stoarge classes depending on how often you intend to access the data you have stored. If you want to access it for general needs then using S3 Standard would be sueful however if you might need the data every couple of years then S3 Glacier may be mroe useful. By having more options on storage you can help to reduce costs as classes such as Glacier cost less than a more frequently used class.
+
+## How to use boto3 to create an S3 bucket and use CRUD
+1. Launch a new instance with just port 22
+2. Follow the steps for accessing S3
+3. Use ```pip3 install boto3```
+
+## To create a bucket with boto3
+1. Create a file using ```sudo nano bucket.py```
+2. Enter in the below
+
+```import boto3```
+
+```AWS_REGION = "eu-west-1"```
+
+```client = boto3.client("s3", region_name=AWS_REGION)```
+
+```bucket_name = "billy-tech221"```
+
+```location = {'LocationConstraint': AWS_REGION}```
+
+```response = client.create_bucket(Bucket=bucket_name, CreateBucketConfiguration=location)```
+
+```print("Amazon S3 bucket has been created")```
+
+3. Run the script using python bucket.py
+
+## How to upload a file using boto3
+1. Make another file using ```sudo nano upload.py```
+2. Enter in the below
+
+```
+import boto3
+# Set up the S3 client
+s3 = boto3.client('s3')
+# Set up the local file path and S3 bucket/key
+local_file_path = 'test/test.txt'
+s3_bucket = 'billy-tech221'
+s3_key = 'test/test.txt'
+# Upload the file to S3
+s3.upload_file(local_file_path, s3_bucket, s3_key)
+print(f"{local_file_path} uploaded to s3://{s3_bucket}/{s3_key}")
+```
+
+3. Use python upload.py to run it
+
+## How to download a file using boto3
+1. Delete your test file using ```rm test.txt``` on your instance
+2. Then as before we need to create a file for a script ```sudo nano download.py```
+3. Then enter the following
+```
+import boto3
+
+s3 = boto3.client('s3')
+s3.download_file('billy-tech221', 'test.txt', 'test.txt')
+```
+4. Use ```python download.p```y to run it
+5. You can then use ```ls``` to check if it is now downloaded
+
+## How to delete a file using boto3
+1. Make another file for a script called delete.py
+2. Enter in the below
+```
+import boto3
+
+client = boto3.client('s3')
+s3 = boto3.resource('s3')
+
+bucket_name="billy-tech221"
+
+s3.Object(bucket_name, 'test.txt').delete()
+```
+
+3. Then use ```python delete.py``` to run it
+
+## How to delete a bucket using boto3
+1. Create a file for a new script called ```delete-bucket.py```
+2. Enter in the below
+```
+import boto3
+
+client = boto3.client('s3')
+s3 = boto3.resource('s3')
+
+bucket_name="oleg-tech221"
+
+response = client.delete_bucket(
+        Bucket=bucket_name,
+)
+```
+
+3. Then use ```python delete-bucket.py``` to run it

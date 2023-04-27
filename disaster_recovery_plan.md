@@ -97,13 +97,10 @@ You can choose different types of stoarge classes depending on how often you int
 
 ```
 import boto3
-# Set up the S3 client
 s3 = boto3.client('s3')
-# Set up the local file path and S3 bucket/key
 local_file_path = 'test/test.txt'
 s3_bucket = 'billy-tech221'
 s3_key = 'test/test.txt'
-# Upload the file to S3
 s3.upload_file(local_file_path, s3_bucket, s3_key)
 print(f"{local_file_path} uploaded to s3://{s3_bucket}/{s3_key}")
 ```
@@ -148,7 +145,7 @@ import boto3
 client = boto3.client('s3')
 s3 = boto3.resource('s3')
 
-bucket_name="oleg-tech221"
+bucket_name="billy-tech221"
 
 response = client.delete_bucket(
         Bucket=bucket_name,
